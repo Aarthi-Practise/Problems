@@ -1,0 +1,101 @@
+{
+    "cells": [
+        {
+            "language": "markdown",
+            "source": [
+                "----\n## 🏋️‍♀️ 2D Arrays - extended"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "### Array sort based on column value\n\n❓Given an `N X N` array, implement function `sort2DArrayByColumnValues` to sort the rows of the array based on the value of column at the given index `column`. \n> Tip: This is similar to sorting the elements of spreadsheet based on single column\n\n#### **Constraints**\n>    column >= 0 and column <= N-1\n\n👀 Example\n\nInput\n```\nmat [3][3] =  \n[\n    [1,5,6],\n    [4,1,7],\n    [3,7,2]\n]\ncolumn = 1\n```\n\nOutput\n```\n4 1 7\n1 5 6\n3 7 2\n```\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const sort=(array,column)=>{\r\n    for(let row=1;row<array.length;row++){\r\n        let position=row;\r\n        for(let previous=row-1;previous>=0;previous--){\r\n            if(array[position][column]<array[previous][column]){\r\n                let swap=array[row];\r\n                array[row]=array[previous];\r\n                array[previous]=swap;\r\n                position=previous;\r\n            }\r\n        }\r\n    }\r\n    return array;\r\n}\r\nconsole.log(sort([[1,5,6],[4,1,7],[3,7,2]],1));"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "### Array main diagonal sorting\n\n❓ Given an N X N array, implement the function `sort2DArrayMainDiagonals` to sort all the elements, **in place**, of the main diagonals separately in `DESC` order. Main diagonal is backward slash'ish diagonal i.e. `\\` diagonal.\n\n> 💡 Tip: Sorting applies to only the elements of the main diagonals; no relation with the contents of the other main diagonals\n\n👀 Example\n\nInput \n```\n1 5 3\n5 2 7\n1 8 3\n```\n> Here, the diagonals are `[1], [5, 8], [1, 2, 3], [5, 7] & [3]` so you need to sort them individually\n\n\nOutput\n```\n3 7 3\n8 2 5\n1 5 1\n\n```\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const diagonal_sort=(array)=>{\r\n    let totalDiagonals=(2*array.length)-1;\r\n    let diagonalRow=array.length-1, diagonalColumn=0;\r\n    for(let diagonal=0;diagonal<totalDiagonals;diagonal++){\r\n        let column=diagonalColumn;\r\n        let row=diagonalRow;\r\n        let sorted=[];\r\n        while((diagonal<=Math.floor(totalDiagonals/2) && row<array.length) || (diagonal>Math.floor(totalDiagonals/2) && column<array.length)){\r\n            sorted.push(array[row][column]);\r\n            row++;\r\n            column++;\r\n        }\r\n        sorted.sort();\r\n        column=diagonalColumn;\r\n        row=diagonalRow;\r\n        while((diagonal<=Math.floor(totalDiagonals/2) && row<array.length) || (diagonal>Math.floor(totalDiagonals/2) && column<array.length)){\r\n            array[row][column]=sorted.pop();\r\n            row++;\r\n            column++;\r\n        }\r\n        if(diagonal<Math.floor(totalDiagonals/2)){\r\n            diagonalRow--;\r\n            diagonalColumn=0;\r\n        }\r\n        else{\r\n            diagonalColumn++;\r\n            diagonalRow=0;\r\n        }\r\n    }\r\n    console.log(array);\r\n}\r\ndiagonal_sort([[1,5,3],[5,2,7],[1,8,3]]);\r\n"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "[ [ 3, 7, 3 ], [ 8, 2, 5 ], [ 1, 5, 1 ] ]",
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "### Word Search\r\n\r\n❓ Given a 2D board and a word, find if the word exists in the grid. \\\r\nThe word can be constructed from letters of `sequentially adjacent cell`, where *`adjacent`* cells are those `horizontally or vertically neighboring`. The same letter cell may not be `used more than once`.\r\n\r\n> Note: All the Inputs will be capital letters only.\r\n\r\n👀 Example\r\n\r\n``` python\r\nboard =\r\n[\r\n  ['A','B','C','E'],\r\n  ['S','F','C','S'],\r\n  ['A','D','E','E']\r\n]\r\n\r\nGiven word = \"ABCCED\", return true.\r\nGiven word = \"SEE\", return true.\r\nGiven word = \"SEED\", return true.\r\nGiven word = \"SEEF\", return false.\r\nGiven word = \"ABCB\", return false.\r\n```"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const wordSearch = (originalArray , word) => {\r\n    for(let row = 0; row < originalArray.length ; row++){\r\n        let currentRow = row;\r\n        for(let column = 0 ; column < originalArray[row].length ; column++){\r\n            let currentColumn = column;\r\n            let wordIndex = 0;\r\n            if(originalArray[currentRow][currentColumn] == word[wordIndex]){\r\n                let array = [];\r\n                for(let index = 0 ; index < originalArray.length ; index++){\r\n                    array.push([...originalArray[index]]);\r\n                }\r\n                array[currentRow][currentColumn]='#';\r\n                while(wordIndex < word.length-1 && wordIndex != -1){\r\n                    wordIndex++;\r\n                    if(currentColumn+1 < array[row].length && (array[currentRow][currentColumn+1] == word[wordIndex])){\r\n                        array[currentRow][currentColumn+1]=\"#\";\r\n                        currentColumn++;\r\n                    }\r\n                    else if(currentRow+1 < array.length && (array[currentRow+1][currentColumn] == word[wordIndex])){\r\n                        array[currentRow+1][currentColumn]=\"#\";\r\n                        currentRow++;\r\n                    }\r\n                    else if(currentColumn-1 >= 0 && (array[currentRow][currentColumn-1] == word[wordIndex])){\r\n                        array[currentRow][currentColumn-1]=\"#\";\r\n                        currentColumn--;\r\n                    }\r\n                    else if(currentRow-1>=0 && (array[currentRow-1][currentColumn]==word[wordIndex])){\r\n                        array[currentRow-1][currentColumn]=\"#\";\r\n                        currentRow--;\r\n                    }\r\n                    else{\r\n                        wordIndex=-1;\r\n                    }\r\n                }\r\n                if(wordIndex==word.length-1){\r\n                    return true;\r\n                }\r\n            }\r\n        }\r\n    }\r\n    return false;\r\n}\r\nconsole.log(wordSearch([\r\n    ['A','B','C','E'],\r\n    ['S','F','C','S'],\r\n    ['A','D','E','E']\r\n  ],\"SEED\"));\r\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                ""
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "### Flatten 2D arrays\n\n❓ Implement method `flatten2DArray` that converts the given 2d array to a 1D array.\n\n👀 Example\n\n``` \nGiven array:\n[\n    [31 12 43]\n    [21 9 16]\n    [ 0 9 0]\n]\n\nFlattened array:\n[31 12 43 21 9 16 0 9 0]\n```"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const flattened=(array)=>{\r\n    for(let row=1;row<array.length;row++){\r\n        for(let column=0;column<array[row].length;column++){\r\n            array[0].push(array[row][column]);\r\n        }\r\n    }\r\n    return array[0];\r\n}\r\nconsole.log(flattened([[31,12,43],[21,9,16],[0,9,0]]));"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "### Flatten 2D arrays nested\n\n❓Using recursion, implement method `flatten2DArrayNested` to convert the 2d array in to a 1D array where each element itself can be an 2D array or array or single item.\n\n```\nInput:\n[\n    [31, [12, 43], [1] ]\n    [21, [9, [10 6]], 16]\n    [ 0, 9, 0]\n]\n\nFlattened array:\n[31, 12, 43, 1, 21, 9, 10, 6, 16, 0, 9, 0]\n```\n\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                ""
+            ],
+            "outputs": []
+        }
+    ]
+}

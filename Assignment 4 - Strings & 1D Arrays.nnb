@@ -1,0 +1,277 @@
+{
+    "cells": [
+        {
+            "language": "markdown",
+            "source": [
+                "# Strings & 1D Arrays"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "#### ❓ Insert at the middle\nGiven a parentString and a subString, print the modified string by inserting subString at the middle of parentString (In case if the length of the parentString is odd, use ceiling value while calculating the middle index i.e., use 4 when the length is 7)\n> **Example**: \n> ```javascript\n> Input: Take\n> parentString: “I LONDIA”\n> subString: “VE I”\n> Output: It should print “I LOVE INDIA”\n> ```"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "function insert(parentString, subString){\r\n    let result=\"\";\r\n    for(let index=0;index<parentString.length;index++){\r\n        // concatinatinng words to the resultant string\r\n        result+=parentString[index];\r\n        if(index==Math.floor(parentString.length/2)-1){\r\n            // concatinating substring when index rezches middle position\r\n            result+=subString;\r\n        }\r\n    }\r\n    return result;\r\n}\r\nconsole.log(insert(\"I LONDIA\",\"VE I\"));"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "I LOVE INDIA",
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "---"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "#### ❓ Count the consecutive character sets\nGiven a string, find the number of possible Sets.\nA Set is formed when three consecutive characters are of the same value. \n> **Example**: ‘accccdbbba’ has 3 sets (2 ccc's & 1 bbb)"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "function count_sets(String){\r\n    let count=0;\r\n    for(let index=0;index<String.length-2;index++){\r\n        // checking equality between first next and second next elements to the current element\r\n        if(String[index+1]==String[index] && String[index+2]==String[index]){\r\n            count++;\r\n        }\r\n    }\r\n    return count;\r\n}\r\nconsole.log(count_sets(\"aaaa\"));"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "2",
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "---"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "#### ❓ Replace string magic sequence\r\nImplement method `replaceMagicSequence(inputArray, inputString)` which will replace the magic character sequence `\"%@\"` sequentially using data from the input array. (Replacement of the `%@` with elements from `inputArray` should be from left to right)\r\n\r\n> Please do the basic validations of `inputArray` and `inputString`\r\n\r\n> **Example**:\r\n> ```javascript\r\n> Input: Take\r\n> let inputArray =  [\"Mr.\", \"Virat\", \"23rd March 2023\", \"04:30 PM\"] \r\n> let inputString = \"Please confirm the appointment with %@%@ on %@ at %@\"\r\n> Output:\r\n> It should print \"Please confirm the appointment with Mr.Virat' on 23rd March 2023 at 04:30 PM\"\r\n> ``` "
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "// =================================METHOD-1( USING STRING METHODS )====================================\r\n\r\n// function magic_seq(input_array,input_string){\r\n//     while(input_string.includes(\"%@\")==true){\r\n//         let newstring=input_string.replace(\"%@\",input_array.shift());\r\n//         input_string=newstring;\r\n//     }\r\n//     console.log(input_string);\r\n// }\r\n// magic_seq([\"Mr.\", \"Virat\", \"23rd March 2023\", \"04:30 PM\"],\"Please confirm the appointment with %@%@ on %@ at %@\")\r\n\r\n\r\n\r\n//=================================METHOD-2 ( USING LETTER SPLIT )======================================\r\n\r\n// =================================METHOD-1( USING STRING METHODS )====================================\r\n\r\n// function magic_seq(input_array,input_string){\r\n//     while(input_string.includes(\"%@\")==true){\r\n//         let newstring=input_string.replace(\"%@\",input_array.shift());\r\n//         input_string=newstring;\r\n//     }\r\n//     console.log(input_string);\r\n// }\r\n// magic_seq([\"Mr.\", \"Virat\", \"23rd March 2023\", \"04:30 PM\"],\"Please confirm the appointment with %@%@ on %@ at %@\")\r\n\r\n\r\n\r\n//=================================METHOD-2 ( USING LETTER SPLIT )======================================\r\n\r\nfunction magic_seq(input_array,input_string){\r\n    let result=\"\";\r\n    input_string=Array.from(input_string);\r\n    for(let index=0;index<input_string.length;index++){\r\n        if(input_string[index]==\"%\" && input_string[index+1]==\"@\"){\r\n            // concatinatinng substring to the resultant string instead of %@\r\n            if(input_array.length==0){\r\n                result+=\"%@\";\r\n            }\r\n            else{\r\n                result+=input_array.shift();\r\n            }\r\n            index++;\r\n        }\r\n        else{\r\n            // concatinatinng letters to the resultant string\r\n            result+=input_string[index];\r\n        }\r\n    }\r\n    console.log(result);\r\n}\r\nmagic_seq([\"Mr.\", \"Virat\", \"23rd March 2023\", \"04:30 PM\"],\"Please confirm the appointment with %@%@ on %@ at %@ %@\")"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "Please confirm the appointment with Mr.Virat on 23rd March 2023 at 04:30 PM %@",
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "---\n---"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "# Lists"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "### 1D Array"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "#### ❓ Print array from first and last alternatively \nGiven an array, write a function to print one element from the front, another from the back, and so on till the array is exhausted.\n> Example: [1, 2, 3, 4, 5] => 1, 5, 2, 4, 3"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "// ===========================METHOD-1=================================\r\n\r\n// function first_last(array){\r\n//     if array has no elements\r\n//     if(array.length==0){\r\n//         return \"array is empty\";\r\n//     }\r\n//     // if array has elements\r\n//     let result=[];\r\n//     while(array.length>0){\r\n//         result.push(array.shift());\r\n//         if(array.length>0){\r\n//             result.push(array.pop());\r\n//         }\r\n//     }\r\n//     console.log(result);\r\n// }\r\n// first_last([1,2,3,4,5])\r\n\r\n\r\n\r\n\r\n//===========================METHOD-2========================================\r\n\r\nfunction first_last(array){\r\n    // if array has no elements\r\n    if(array.length==0){\r\n        return \"array is empty\";\r\n    }\r\n    // if array has elements\r\n    let result=[];\r\n    for(let index=0;index<Math.floor(array.length/2);index++){\r\n        // pushing first and last elements\r\n        result.push(array[index]);\r\n        result.push(array[array.length-1-index]);\r\n    }\r\n    // pushing odd element of odd length of array\r\n    if(Math.floor(array.length%2)==1){\r\n        result.push(array[Math.floor(array.length/2)]);\r\n    }\r\n    return result;\r\n}\r\nconsole.log(first_last([1,2]));"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "[ 1, 2 ]",
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "---"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "#### ❓ Print array from first and middle alternatively\nGiven an array, write a function that prints one element from the front, and another from the middle, and so on till the array is exhausted.\n> Example: [1, 2, 3, 4, 5, 6] => 1, 4, 2, 5, 3, 6"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "function alternate(array){\r\n    // if array has no elements\r\n    if(array.length==0){\r\n        return \"array is empty\";\r\n    }\r\n    // if array has elements\r\n    let result=[];\r\n    let mid=Math.floor(array.length/2);\r\n    for (let index=0;index<mid;index++){\r\n        // pushing first and middle elements\r\n        result.push(array[index]);\r\n        if(array.length%2==1){\r\n            result.push(array[mid+index+1])\r\n        }\r\n        else{\r\n            result.push(array[mid+index])\r\n        }\r\n    }\r\n    // pushing middle element for odd length of array\r\n    if(array.length%2==1){\r\n        result.push(array[mid])\r\n    }\r\n    return result;\r\n}\r\nconsole.log(alternate([1,2,3,4,5]));"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "[ 1, 4, 2, 5, 3 ]",
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "---"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "#### ❓ Array with multiplied adjacent elements \nWrite a function that calculates a result array that is formed by the multiplication of adjacent elements.\n> Example: [1, 2, 3, 4, 5] => [2, 6, 24, 60, 20]"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "function adjacent(array){\r\n    // if array length is equal to 0\r\n    if(array.length==0){\r\n        console.log(\"array is empty\");\r\n    }\r\n    else{\r\n        let result=[];\r\n        // multiplying adjacent of first element\r\n        result.push(array[0]*array[1]);\r\n        for(let index=1;index<array.length-1;index++){\r\n            //multiplying adjacent elements of midde elements \r\n            result.push(array[index-1]*array[index]*array[index+1]);\r\n        }\r\n        // multiplying adjacent of last element\r\n        result.push(array[array.length-1]*array[array.length-2]);\r\n        return result;\r\n    }\r\n}\r\nconsole.log(adjacent([1,2]));"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "[ 2, 2 ]",
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "---"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "#### ❓ Array find if two numbers sum to the given one\nWrite a function that returns whether two elements exist within the given array summing up to the given number `Z`.\n\n> Example: [1, 2, 3, 4, 5],\n> \n> Z = 10 => false\n> \n> Z = 7 => true"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "function sum_given_one(array,sum){\r\n    if(array.length==0){\r\n        return \"array is empty\";\r\n    }\r\n    // for(let index1=0;index1<array.length-1;index1++){\r\n    //     for(let index2=index1+1;index2<array.length;index2++){\r\n    //         // checking sum of pair\r\n    //         if(array[index1]+array[index2]==sum){\r\n    //             return true;\r\n    //         }\r\n    //     }\r\n    // }\r\n    for(let index1=0;index1<array.length;index1++){\r\n        let index2=index1+1;\r\n        while(index2<array.length){\r\n            if(array[index1]+array[index2]==sum){\r\n                return true;\r\n            }\r\n            index2++;\r\n        }\r\n    }\r\n    return false;\r\n}\r\nconsole.log(sum_given_one([1,2,3,4,5],10));"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "false",
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "#### ❓ Array balance point for partition \nWrite a function that returns whether there exists an index from which the sum to the `left (inclusive)` is equal to the sum to the `right (exclusive)`  \n\n> Example: \n> \n> Input : [1, 2, 3, 4, 5] Output : false \n> \n> Input :  [1, 11, 17, 28, 1]  Output :true"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "function balance(array){\r\n    // if array has no elements\r\n    if(array.length==0){\r\n        return \"array is empty\";\r\n    }\r\n    // if array has ony single element\r\n    else if(array.length==1){\r\n        return true;\r\n    }\r\n    // if array has more than one element\r\n    let balance_point=0;\r\n    while(left_sum!=right_sum && balance_point<array.length || balance_point==0){\r\n        let left_sum=0;\r\n        let right_sum=0;\r\n        // for sum of left array elements\r\n        for(index=0;index<=balance_point;index++){\r\n            left_sum=left_sum+array[index];\r\n            let right=index;\r\n        }\r\n        // for sum of right array elements\r\n        for(index=right+1;index<array.length;index++){\r\n            right_sum=right_sum+array[index];\r\n        }\r\n        //checking left sum and right sum\r\n        if(left_sum==right_sum){\r\n            return true;\r\n        }\r\n        balance_point++;\r\n    }\r\n    return false;\r\n}\r\nconsole.log(balance([1]))"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "---"
+            ],
+            "outputs": []
+        }
+    ]
+}

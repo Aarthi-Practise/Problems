@@ -1,0 +1,152 @@
+{
+    "cells": [
+        {
+            "language": "markdown",
+            "source": [
+                "# Star Patterns Extended & Bar Diagrams"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "---\n\n### ❓ Bar graphs \nWrite a function that takes in an array of integers and prints the corresponding horizontal bar diagram. \\\n> e.g : Array: [1, 4, 3, 8, 2]\n\nOutput\n\n```\n=\n |\n=\n\n====\n    |\n====\n\n===\n   |\n===\n\n========\n        |\n========\n\n==\n  |\n==\n```"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "function bar_graph(array){\r\n    if(array.length<=0){\r\n        console.log(\"array is empty\");\r\n    }\r\n    else{\r\n        for(let index=0;index<array.length;index++){\r\n            if(array[index]>0){\r\n                let result=\"\";\r\n                for(let rows=1;rows<=3;rows++){\r\n                    for(let columns=1;columns<=array[index];columns++){\r\n                        if(rows==2){\r\n                            result+=\" \";\r\n                        }\r\n                        else{\r\n                            result+=\"=\";\r\n                        }\r\n                    }\r\n                    if(rows==2){\r\n                        result+=\"|\";\r\n                    }\r\n                    console.log(result);\r\n                    result=\"\";\r\n                }\r\n            }\r\n        }\r\n    }\r\n}\r\nbar_graph([4,2]);"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "====",
+                                "    |",
+                                "====",
+                                "==",
+                                "  |",
+                                "==",
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "---\n\n### ❓ Vertical Bar Diagram\nWrite function `verticalBarDiagram` that prints the vertical bar diagram\n> e.g. [1, 4, 2, 6]\n\n```\n               | |\n               | |\n     | |       | |\n     | |       | |\n     | |  | |  | |\n| |  | |  | |  | |\n\n```"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "function vertical_bar(array){\r\n    if(array.length<=0){\r\n        console.log(\"array is empty\");\r\n    }\r\n    else{\r\n        let max=Math.max(...array);\r\n        for(let row=1;row<=max;row++){\r\n            let maximum=Math.max(...array);\r\n            let result=\"\";\r\n            for(let col=0;col<array.length;col++){\r\n                if(array[col]==maximum){\r\n                    result+=\"| | \"\r\n                    array[col]--;\r\n                }\r\n                else{\r\n                    result+=\"    \";\r\n                }\r\n            }\r\n            console.log(result);\r\n        }\r\n    }    \r\n}\r\nvertical_bar([0,4,2,6]);"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "            | | ",
+                                "            | | ",
+                                "    | |     | | ",
+                                "    | |     | | ",
+                                "    | | | | | | ",
+                                "    | | | | | | ",
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "---\n\n### ❓Hollow patterns\nPrint the following patterns\n\n#### Hollow diamond"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "> if n=5\n\n```\n    *\n   * *\n  *   *\n *     *\n*       *\n *     *\n  *   *\n   * *\n    *\n```"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "function vertical_bar(size){\r\n    if(size<1){\r\n        console.log(\"enter valid size\");\r\n    }\r\n    else if(size==1){\r\n        console.log(\"*\");\r\n    }\r\n    else{\r\n        let spaces=size-1;\r\n        for(let rows=1;rows<=(2*size)-1;rows++){\r\n            let result=\"\";\r\n            for(let columns=1;columns<=(2*size)-1;columns++){\r\n                if(columns==spaces+1 || columns==spaces+1+2*(rows-1) || columns==(2*size)-spaces-1){\r\n                    result+=\"*\";\r\n                }\r\n                else{\r\n                    result+=\" \";\r\n                }\r\n            }\r\n            if(rows<size){\r\n                spaces--;\r\n            }\r\n            else{\r\n                spaces++;\r\n            }\r\n            console.log(result);\r\n            result=\"\";\r\n    \r\n        }\r\n    }\r\n}\r\nvertical_bar(7);"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "---\n### ❓ Mountains\n> if n == 5\n\n```\n     *       *\t\n    * *     * *\n   *   *   *   *\n  *     * *     *\n *       *       *\n\n```"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "function mountain(size){\r\n    if(size<1){\r\n        console.log(\"enter valid size\");\r\n    }\r\n    else if(size==1){\r\n        console.log(\"*\");\r\n    }\r\n    else{\r\n        for(let row=1;row<=size;row++){\r\n            let spaces=size-row;\r\n            let result=\"\";\r\n            for(let col=1;col<=4*size-3;col++){\r\n                if(col==spaces+1 || col==spaces+1+2*(row-1) || col==4*size-3-(spaces) || col==4*size-3-(spaces+2*(row-1))){\r\n                    result+=\"*\";\r\n                }\r\n                else{\r\n                    result+=\" \";\r\n                }\r\n            }\r\n            console.log(result);\r\n        }\r\n    }\r\n}\r\nmountain(2);"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                " * * ",
+                                "* * *",
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "---\n### ❓ Inverse Pyramid\n\n> if n = 5\n\n```\n * * * * * \n  * * * * \n   * * * \n    * * \n     * \n```"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "function inverse_pyramid(size){\r\n    if(size<1){\r\n        console.log(\"enter valid size\");\r\n    }\r\n    else if(size==1){\r\n        console.log(\"*\");\r\n    }\r\n    else{\r\n        for(let rows=1;rows<=size;rows++){\r\n            let spaces=rows-1;\r\n            let result=\"\";\r\n            for(let col=1;col<=2*size-1-spaces;col++){\r\n                if(col<=spaces){\r\n                    result+=\" \";\r\n                }\r\n                else if(rows%2==1 && col%2==1 || rows%2==0 && col%2==0){\r\n                    result+=\"*\";\r\n                }\r\n                else{\r\n                    result+=\" \";\r\n                }\r\n            }\r\n            console.log(result);\r\n        }\r\n    }\r\n}\r\ninverse_pyramid(9)"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "---\n### ❓ Sandglass\n\n> if n=5\n\n```\n* * * * * \n * * * * \n  * * * \n   * * \n    * \n    * \n   * * \n  * * * \n * * * * \n* * * * * \n```\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "function sandglass(size){\r\n    if(size<1){\r\n        console.log(\"enter valid size\");\r\n    }\r\n    else if(size==1){\r\n        console.log(\"*\");\r\n    }\r\n    else{\r\n        let spaces=0;\r\n        for(let row=1;row<=2*size;row++){\r\n            let result=\"\";\r\n            for(let col=1;col<=2*size-spaces-1;col++){\r\n                if(col<=spaces){\r\n                    result+=\" \";\r\n                }\r\n                else if((row<=size) && (row%2==1 && col%2==1 || row%2==0 && col%2==0)){\r\n                    result+=\"*\";\r\n                }\r\n                else if((row>size) && (row%2==0 && col%2==1 || row%2==1 && col%2==0)){\r\n                    result+=\"*\";\r\n                }\r\n                else{\r\n                    result+=\" \";\r\n                }\r\n            }\r\n            console.log(result);\r\n            if(row<size){\r\n                spaces++;\r\n            }\r\n            else if(row>size){\r\n                spaces--;\r\n            }\r\n        }\r\n    }\r\n}\r\nsandglass(2);"
+            ],
+            "outputs": []
+        }
+    ]
+}

@@ -1,0 +1,99 @@
+{
+    "cells": [
+        {
+            "language": "markdown",
+            "source": [
+                "# Dictionaries- extended and Trees\r\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "## 📖 Self study\r\n - Trees and preorder, preorder, inorder traversal\r\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "----\r\n## 🏋️‍♀️Exercise \r\n### Dictionaries\r\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "#### ❓[#1] Build Coffee Machine ☕️\r\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "MENU = {\r\n    \"espresso\": {\r\n        \"ingredients\": {\r\n            \"water\": 50,\r\n            \"coffee\": 18,\r\n        },\r\n        \"cost\": 4.7,\r\n    },\r\n    \"latte\": {\r\n        \"ingredients\": {\r\n            \"water\": 200,\r\n            \"milk\": 150,\r\n            \"coffee\": 24,\r\n        },\r\n        \"cost\": 12.5,\r\n    },\r\n    \"cappuccino\": {\r\n        \"ingredients\": {\r\n            \"water\": 250,\r\n            \"milk\": 100,\r\n            \"coffee\": 24,\r\n        },\r\n        \"cost\": 10.2,\r\n    }\r\n}\r\n\r\nresources = {\r\n    \"water\": 300,\r\n    \"milk\": 200,\r\n    \"coffee\": 100,\r\n}\r\n\r\ncoins = {\r\n    \"quarters\": 0.25,\r\n    \"half\": 0.50,\r\n    \"threeFourth\": 0.75,\r\n    \"full\": 1.00\r\n    }\r\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "Using above `MENU` ☝  build a coffee machine. ☕️\r\n\r\n👉 You are given 3 coffee types `espresso`, `latte`, and `cappuccino`. Their ingredients and cost are given in the menu.\r\n\r\n👉 You need to take user inputs for Type of coffee and display the price of the Coffee and display accepted coins. Then take user inputs of coins that they will insert.\r\n\r\n👉 You need to prepare and deliver a coffee only when the `ingredients are available to deliver coffee` and `the total value of inserted coins should match the coffee cost`\r\n\r\nIf any constraints were violated, You need to inform the violation message to user and ask for input.\r\n\r\n👉 Use command `OFF` to switch off the coffee machine.\r\n\r\n#### Input Example:\r\n\r\n**What would you like? (espresso, latte, cappuccino):**   `cappuccino`\r\n\r\n**Please insert coins.**\r\n\r\n**How many quarters?:**  `5`\r\n\r\n**How many halfs?:**  `5`\r\n\r\n**How many threeFourths?:**  `5`\r\n\r\n**How many fulls?**  `3`\r\n\r\n#### Output:\r\n\r\nHere is the change ₹0.3\r\n\r\nHere is your cappuccino ☕️. Enjoy!\r\n\r\n#### Error cases ❌\r\n\r\n1. No money - Sorry, insufficient money\r\n2. No sufficient ingredients - Sorry, there is not enough `ingredient` (water/milk/coffee)\r\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "class CoffeeMachine {\r\n    drink() {\r\n      const prompt = require(\"prompt-sync\")();\r\n      let drink = prompt(\"What would you like? (espresso, latte, cappuccino, off):\");\r\n      if ((drink == \"espresso\") || (drink == \"latte\") || (drink == \"cappuccino\")) {\r\n        console.log(\"\\nPlease insert coins.\");\r\n        let quarterCost = parseInt(prompt(\"\\nHow many quarters?:\"));\r\n        let halfCost = parseInt(prompt(\"\\nHow many halfs?:\"));\r\n        let threeFourthCost = parseInt(prompt(\"\\nHow many threeFourths?:\"));\r\n        let fullCost = parseInt(prompt(\"\\nHow many fulls?:\"));\r\n        let totalCost = (quarterCost * coins[\"quarters\"]) + (halfCost * coins[\"half\"]) + (threeFourthCost * coins[\"threeFourth\"]) + (fullCost * coins[\"full\"]);\r\n        if (totalCost >= MENU[drink][\"cost\"]) {\r\n          let drinkIngredients = MENU[drink][\"ingredients\"];\r\n          if ((drinkIngredients[\"water\"] <= resources[\"water\"]) && (drinkIngredients[\"milk\"] <= resources[\"milk\"]) && (drinkIngredients[\"coffee\"] <= resources[\"coffee\"])) {\r\n            resources[\"water\"] -= drinkIngredients[\"water\"];\r\n            resources[\"milk\"] -= drinkIngredients[\"milk\"];\r\n            resources[\"coffee\"] -= drinkIngredients[\"coffee\"];\r\n            console.log(\"\\nHere is the change ₹\" +(totalCost - MENU[drink][\"cost\"]).toFixed(2));\r\n            console.log(`\\nHere is your ${drink} ☕️. Enjoy!`);\r\n          }\r\n          else {\r\n            console.log(\"\\nNo sufficient ingredients - Sorry, there is not enough `ingredient` (water/milk/coffee)\");\r\n          }\r\n        }\r\n        else {\r\n          console.log(\"\\nNo money - Sorry, insufficient money\");\r\n        }\r\n      }\r\n      else if(drink == \"off\") {\r\n        console.log(\"machine off\");\r\n      }\r\n      else {\r\n        console.log(\"Wrong drink input\");\r\n      }\r\n    }\r\n  }\r\n  let obj = new CoffeeMachine();\r\n  obj.drink();\r\n  obj.drink();"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "What would you like? (espresso, latte, cappuccino, off):"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "#### ❓[#2] Shopping at the Market 🛍\r\n```\r\nshopping_list = [\"banana\", \"orange\", \"apple\"]\r\n\r\nstock = {\r\n  \"banana\": 6,\r\n  \"apple\": 0,\r\n  \"orange\": 32,\r\n  \"pear\": 15\r\n}\r\n    \r\nprices = {\r\n  \"banana\": 4,\r\n  \"apple\": 2,\r\n  \"orange\": 1.5,\r\n  \"pear\": 3\r\n}\r\n```\r\nUse the above input to compute the bill and return the total and pending item from the list.\r\n\r\n1. For each item in the shopping_list, add the price of that item to total. Finally, return the total.\r\n2. If the item is in stock and after you add the price to the total, subtract one from the item’s stock count.\r\n3. If the item is not in stock don't add item price to total. Add item to pending items list and return it with total \r\n\r\nFor example\r\n\r\n```\r\n  Input = [\"banana\", \"orange\", \"apple\"]\r\n  Output :\r\n   Total bill amount : 5.5\r\n   Pending list :  [\"Apple\"]\r\n\r\n  Input :  [\"banana\", \"orange\"]\r\n  Output :\r\n   Total bill amount : 5.5\r\n   Woo Hoo shopping completed 🎉 \r\n\r\n  Input = [\"banana\", \"orange\", \"apple\", \"guava\"]\r\n  Output :\r\n   Total bill amount : 5.5\r\n   Pending list :  [\"apple\",\"guava\"]\r\n\r\n```\r\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "stock = {\r\n    \"banana\": 6,\r\n    \"apple\": 0,\r\n    \"orange\": 32,\r\n    \"pear\": 15\r\n}\r\n\r\nprices = {\r\n    \"banana\": 4,\r\n    \"apple\": 2,\r\n    \"orange\": 1.5,\r\n    \"pear\": 3\r\n}\r\n\r\nfunction compute_bill(shoppingList) {\r\n    let totalCost = 0;\r\n    let pendingList = [];\r\n    for (let fruits of shoppingList) {\r\n        if (stock.hasOwnProperty(fruits) == true && stock[fruits] > 0) {\r\n            totalCost += prices[fruits];\r\n        }\r\n        else if (stock.hasOwnProperty(fruits) == false || stock[fruits] <= 0) {\r\n            pendingList.push(fruits);\r\n        }\r\n    }\r\n    console.log(`Total bill amount : ${totalCost}`);\r\n    if (pendingList.length != 0) {\r\n        console.log(\"Pending list : \" + pendingList);\r\n    }\r\n    else {\r\n        console.log(\"Woo Hoo shopping completed 🎉\");\r\n    }\r\n}\r\ncompute_bill([\"banana\", \"orange\", \"guava\", \"grapes\", \"apple\"]);"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "----\r\n### 🎄Trees "
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "❓[#3   ] Create a binary tree in linear fashion \r\n\r\nImplement a binary tree using Doubly Linked Lists where the elements of the tree will be filled in linear fashion from `Left -> Right`.\r\n\r\nUse `In-order` traversal for printing tree from the list. \r\n\r\nFor example :\r\n\r\n```\r\nInput data elements  1, 2, 3, 4, 5, 6\r\n\r\nTree would look like this\r\n                  1\r\n                 / \\\r\n                2   3\r\n               / \\ /\r\n              4  5 6\r\n\r\nOutput :  4 2 5 1 6 3\r\n\r\n````"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "function Node(data) {\r\n    this.data = data;\r\n    this.left = null;\r\n    this.right = null;\r\n}\r\nclass LinearTree {\r\n    constructor() {\r\n        this.root = null;\r\n        this.parent = null;\r\n        this.result=[];\r\n    }\r\n    add_child(data) {\r\n        let newNode = new Node(data);\r\n        if (this.root == null) {\r\n            this.root = newNode;\r\n        }\r\n        else {\r\n            let queue = [this.root];\r\n            while (queue.length > 0) {\r\n                let currentNode = queue.shift();\r\n                if (currentNode.left == null) {\r\n                    currentNode.left = newNode;\r\n                    break;\r\n                }\r\n                else if (currentNode.right == null) {\r\n                    currentNode.right = newNode;\r\n                    break;\r\n                }\r\n                else {\r\n                    queue.push(currentNode.left);\r\n                    queue.push(currentNode.right);\r\n                }\r\n            }\r\n        }\r\n    }\r\n    inorder() {\r\n        let currentNode = this.root;\r\n        if( currentNode == null) {\r\n            return 'no tree';\r\n        }\r\n        return this.traversal(currentNode);\r\n    }\r\n    traversal(node) {\r\n        if (node != null) {\r\n            this.traversal(node.left);\r\n            this.result.push(node.data);\r\n            this.traversal(node.right);\r\n        }\r\n        return this.result;\r\n    }\r\n}\r\n\r\nvar assert = require('assert')\r\nlet linearTree = new LinearTree();\r\nlinearTree.add_child(1)\r\nlinearTree.add_child(2)\r\nlinearTree.add_child(3);\r\n// console.log(linearTree.inorder())\r\n// assert.deepEqual(linearTree.inorder(), [2, 1, 3])\r\nlinearTree.add_child(4)\r\nlinearTree.add_child(5)\r\nlinearTree.add_child(6);    \r\n// console.log(linearTree.inorder())\r\nassert.deepEqual(linearTree.inorder(), [4, 2, 5, 1, 6, 3])\r\n\r\n"
+            ],
+            "outputs": []
+        }
+    ]
+}

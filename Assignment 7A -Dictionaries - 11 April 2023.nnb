@@ -1,0 +1,154 @@
+{
+    "cells": [
+        {
+            "language": "markdown",
+            "source": [
+                "# Dictionaries\r\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "### ❓ [#1]  count the frequency of words appearing in a string using a dictionary\r\n\r\nInput = ```\"hello world hello ai hello python hello ai\"```\r\n\r\nOutput = {```'hello': 4, 'world': 1, 'ai': 2, 'python': 1```}\r\n> Tip: This is similar to sorting the elements of spreadsheet based on single column\r\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "\r\ngetFrequency = (inputString) => {\r\n\r\n    // If empty, handle error\r\n\r\n    inputString = inputString.split(\" \");\r\n    let setInputString = new Set(inputString);\r\n    let result = new Object();\r\n    for (let setIndex of setInputString) {\r\n        let count = 0;\r\n        for (let inputIndex of inputString) {\r\n            if (inputIndex == setIndex) {\r\n                count++;\r\n            }\r\n        }\r\n        result[setIndex] = count;\r\n    }\r\n    return result;\r\n}\r\n\r\nvar assert = require(\"assert\");\r\n// console.log(getFrequency(\"hello world hello ai hello python hello ai\"));\r\nassert.deepEqual(getFrequency(\"hello world hello ai hello python hello ai\"), { 'hello': 4, 'world': 1, 'ai': 2, 'python': 1 })"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "### ❓ [#2] Create a dictionary with `Key` being the first character of a word and `Value` being a comma-separated string wiht all the words starting with that character\r\n\r\nInput =```\"hello world python is the best programming language\"```\r\n\r\nOutput = \r\n{\r\n ```\r\n 'h': 'hello',\r\n 'w': 'world',\r\n 'p': 'python, programming',\r\n 'i': 'is',\r\n 't': 'the',\r\n 'b': 'best',\r\n 'l': 'language'\r\n ```\r\n}"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "function getFirstCharacterKeyAndValue(inputString) {\r\n    inputString = inputString.split(\" \");\r\n    let set = new Set();\r\n    let result = new Object();\r\n    for (let inputStringIndex of inputString) {\r\n        set.add(inputStringIndex[0]);\r\n    }\r\n    for (let onSet of set) {\r\n        let string = \"\";\r\n        for (let onWord of inputString) {\r\n            if (onSet == onWord[0] && string == \"\") {\r\n                string += onWord;\r\n            }\r\n            else if (onSet == onWord[0]) {\r\n                string += \", \" + onWord;\r\n            }\r\n        }\r\n        result[onSet] = string;\r\n    }\r\n    return result;\r\n}\r\n// getFirstCharacterKeyAndValue(\"hello world python is the best programming language\");\r\n\r\n\r\nlet assert = require(\"assert\");\r\nlet inpotVal = \"\"\r\nassert.deepEqual(getFirstCharacterKeyAndValue(\"hello world isIt python is the best programming language\"), {\r\n    'h': 'hello',\r\n    'w': 'world',\r\n    'p': 'python, programming',\r\n    'i': 'isIt, is',\r\n    't': 'the',\r\n    'b': 'best',\r\n    'l': 'language'\r\n}\r\n)\r\n\r\n"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.error",
+                            "value": {
+                                "name": "AssertionError",
+                                "message": "Expected values to be loosely deep-equal:\n\n{\n  b: 'best',\n  h: 'hello',\n  i: 'isIt, is',\n  l: 'language',\n  p: 'python, programming',\n  t: 'the',\n  w: 'world'\n}\n\nshould loosely deep-equal\n\n{\n  b: 'best',\n  h: 'hello',\n  i: 'is',\n  l: 'language',\n  p: 'python, programming',\n  t: 'the',\n  w: 'world'\n}",
+                                "stack": "AssertionError [ERR_ASSERTION]: Expected values to be loosely deep-equal:\n\n{\n  b: 'best',\n  h: 'hello',\n  i: 'isIt, is',\n  l: 'language',\n  p: 'python, programming',\n  t: 'the',\n  w: 'world'\n}\n\nshould loosely deep-equal\n\n{\n  b: 'best',\n  h: 'hello',\n  i: 'is',\n  l: 'language',\n  p: 'python, programming',\n  t: 'the',\n  w: 'world'\n}\n    at <Cell 5> [26, 104]\n    at <Cell 5> [34, 46]\n    at Script.runInContext (node:vm:141:12)\n    at Script.runInNewContext (node:vm:146:17)\n    at Object.runInNewContext (node:vm:306:38)\n    at C (c:\\Users\\HP\\.vscode\\extensions\\donjayamanne.typescript-notebook-2.0.6\\out\\extension\\server\\index.js:2:113345)\n    at t.execCode (c:\\Users\\HP\\.vscode\\extensions\\donjayamanne.typescript-notebook-2.0.6\\out\\extension\\server\\index.js:2:114312)\n    at k.<anonymous> (c:\\Users\\HP\\.vscode\\extensions\\donjayamanne.typescript-notebook-2.0.6\\out\\extension\\server\\index.js:2:142156)\n    at k.emit (node:events:513:28)\n    at k.emit (node:domain:489:12)"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "### Audio object\r\n\r\n### ❓ [#3] Given array of Audio objects, each containing the following string properties ```Song```, ```Album```, ```Composer```, write a function that groups the audios by ```composer``` and then by ```album```.\r\n\r\n**Example**:\r\n\r\nInput:\r\n``` \r\n[\r\n    \r\n{“Marugelara”, album: “Saptapadi”, composer: “KV Mahadevan”},\r\n{“Lali Lali”, album:“Swati Mutyam”, composer: “Ilayaraja”},\r\n{“Suvvi Suvvi”, album:“Swati Mutyam”, composer: “Ilayaraja”},\r\n{“Brochevarevarura”, album: “Sankarabharanam”, composer: “KV Mahadevan”}\r\n\r\n]\r\n```\r\n**Output**:\r\n```\r\n   \"KV Mahadevan\":{\r\n\t    \"Saptapadi\": [\"Marugelara\"],\r\n      \"Shankarabharanam\":[\"Brochevarevarura\"]\r\n    },\r\n\t  \"Ilayaraja\":{\r\n\t\t  \"Swati Mutyam\": [\"Lali Lali\",\"Suvvi Suvvi\"]\r\n    }\r\n```"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "class Song {\r\n    constructor(song, album, composer) {\r\n        this.song = song;\r\n        this.album = album;\r\n        this.composer = composer\r\n    }\r\n    getGroupedSongs = (songs) => {\r\n        let audioGroup = new Object();\r\n        let composerSet = new Set();\r\n        for (let index of songs) {\r\n            composerSet.add(index.composer);\r\n        }\r\n        for (let composerSetIndex of composerSet) {\r\n            let songGroup = new Object();\r\n            for (let index of songs) {\r\n                let songsArray = [];\r\n                if (composerSetIndex == index.composer) {\r\n                    if (songGroup.hasOwnProperty(index.album) == false) {\r\n                        songsArray.push(index.song)\r\n                        songGroup[index.album] = songsArray;\r\n                    }\r\n                    else {\r\n                        songGroup[index.album].push(index.song);\r\n                    }\r\n                }\r\n            }\r\n            audioGroup[composerSetIndex] = songGroup;\r\n        }\r\n        return audioGroup;\r\n    }\r\n}\r\n\r\nlet songsList = [new Song(\"Marugelara\", \"Saptapadi\", \"KV Mahadevan\"), new Song(\"Lali Lali\", \"Swati Mutyam\", \"Ilayaraja\"), new Song(\"Suvvi Suvvi\", \"Swati Mutyam\", \"Ilayaraja\"), new Song(\"Brochevarevarura\", \"Sankarabharanam\", \"KV Mahadevan\")]\r\nlet song = new Song();\r\nsong.getGroupedSongs(songsList);\r\nlet assert = require(\"assert\");\r\nassert(song.getGroupedSongs(songsList), {\r\n    \"KV Mahadevan\": {\r\n        \"Saptapadi\": [\"Marugelara\"],\r\n        \"Shankarabharanam\": [\"Brochevarevarura\"]\r\n    },\r\n    \"Ilayaraja\": {\r\n        \"Swati Mutyam\": [\"Lali Lali\", \"Suvvi Suvvi\"]\r\n    }\r\n})\r\n"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "### ATM Withdrawals\r\n\r\n### ❓ [#4]  Implement method ```withdrawCash(amount)```  that ```returns Dictionary``` of denominations returned by ATM machine for the given withdrawal amount. Available denominations are``` ₹500 - 10, ₹100 - 25, ₹10 - 32.``` If the given amount can't be dispensed, return dictionary ```{-1: -1}``` and print ```Can't dispense amount: <amount>```\r\n\r\nInput: ```amount = 640```\r\n\r\nOutput: \r\n```\r\n{\r\n    500: 1,\r\n    100: 1,\r\n    10: 4\r\n}\r\n```"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "class ATM {\r\n    constructor(denominations) {\r\n        this.denominations = denominations\r\n    }\r\n    withdrawCash = (amount) => {\r\n        let depositObject = new Object();\r\n        let depositsLength = Object.keys(this.denominations).length - 1;\r\n        let count = 0;\r\n        while (depositsLength >= 0) {\r\n            let currency = Object.keys(this.denominations)[depositsLength];\r\n            let fraction = Math.floor(amount / currency);\r\n            if (fraction > 0 && this.denominations[currency] >= fraction) {\r\n                depositObject[currency] = fraction;\r\n                count++;\r\n                amount = amount - (fraction * currency);\r\n                this.denominations[currency] = this.denominations[currency] - fraction;\r\n            }\r\n            depositsLength--;\r\n        }\r\n        if (count == 0) {\r\n            depositObject[-1] = -1;\r\n        }\r\n        return depositObject;\r\n    }\r\n}\r\n\r\nlet atm = new ATM({ 500: 10, 100: 25, 10: 32 });\r\nconsole.log(atm.withdrawCash(23640));\r\nlet assert = require(\"assert\");\r\nassert(atm.withdrawCash(640), { 500: 1, 100: 1, 10: 4 });\r\n"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "{ '-1': -1 }",
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "###  ATM Withdrawals & Deposits\r\n\r\n### ❓ [#5] Implement ```withdrawDepositCashMultiple(stream)``` by supporting a stream of withdrawals ```(float/int)``` & deposits ```(Dictionary)```. If all the stream processing ends successfully, return array with left over denominations.\r\n\r\nRefer #Q4 for available denominations\r\n\r\n> #### 💡Tips\r\n> - Think about what validations you can do with the deposits & withdrawals e.g. deposits can only have supported denominations\r\n> - Include all the possible validations of input stream data before proceeding with the core logic.\r\n\r\nInput: stream = ```[640, 700, {500: 2, 10: 5}, 200, {10: 2, 100: 13}, 500]```\r\n\r\nOutput: ```[500: 9, 100: 33, 10: 35]```"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "class ATM {\r\n    constructor(denominations) {\r\n        this.denominations = denominations\r\n    }\r\n    withdrawCash = (amount) => {\r\n        let depositObject = new Object();\r\n        let depositsLength = Object.keys(this.denominations).length - 1;\r\n        let count = 0;\r\n        while (depositsLength >= 0) {\r\n            let currency = Object.keys(this.denominations)[depositsLength];\r\n            let fraction = Math.floor(amount / currency);\r\n            if (fraction > 0 && this.denominations[currency] >= fraction) {\r\n                depositObject[currency] = fraction;\r\n                count++;\r\n                amount = amount - (fraction * currency);\r\n                this.denominations[currency] = this.denominations[currency] - fraction;\r\n            }\r\n            depositsLength--;\r\n        }\r\n        if (count == 0) {\r\n            depositObject[-1] = -1;\r\n        }\r\n        return depositObject;\r\n    }\r\n    withdrawDepositCashMultiple = (stream) => {\r\n        for (let streamIndex of stream) {\r\n            if (typeof streamIndex == \"number\") {\r\n                this.withdrawCash(streamIndex);\r\n            }\r\n            else if (typeof streamIndex == \"object\") {\r\n                for (let depositIndex in streamIndex) {\r\n                    this.denominations[depositIndex] += streamIndex[depositIndex];\r\n                }\r\n            }\r\n            else {\r\n                return \"invalid input\";\r\n            }\r\n        }\r\n        return this.denominations;\r\n    }\r\n}\r\n\r\nlet atm = new ATM({ 500: 10, 100: 25, 10: 32 });\r\n// console.log(atm.withdrawCash(640));\r\n// console.log(atm.withdrawDepositCashMultiple([640, 700, {500: 2, 10: 5}, 200, {10: 2, 100: 13}, 500]))\r\nlet assert = require(\"assert\");\r\nassert(atm.withdrawDepositCashMultiple([640, 700, { 500: 2, 10: 5 }, 200, { 10: 2, 100: 13 }, 500]), { 500: 9, 100: 32, 10: 31 })\r\n\r\n"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

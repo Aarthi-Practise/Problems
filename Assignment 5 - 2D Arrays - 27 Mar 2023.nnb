@@ -1,0 +1,93 @@
+{
+    "cells": [
+        {
+            "language": "markdown",
+            "source": [
+                "\n### 2D Arrays"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "❓ **Find the first occurrence of search element**\n\nGive a matrix MXN and a number. You need to write a function to find the location first occurrence of it.\n\nyou need check the element in row by row manner.\n\n👀 Example\n\nInput:\n```\n mat[4][5] \n [\n   [1, 2, 3, 4, 5],\n   [2, 4, 5, 8, 10],\n   [3, 5, 7, 9, 11],\n   [1, 3, 5, 7, 9],\n]\nelement 5\n```\n\noutput\n```\n  found at (0,4) \n```\n\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const first_occurance=(array,search)=>{\r\n    for(let row=0;row<array.length;row++){\r\n        for(let column=0;column<array[row].length;column++){\r\n            // checking equality of elemnts with search item\r\n            if(array[row][column]===search){\r\n                return `found at ( ${row},${column} )`;\r\n            }\r\n        }\r\n    }\r\n    return \"element not found\"\r\n}\r\nconsole.log(first_occurance([[1, 2, 3, 4, 5],[],[3, 5, 7, 9, 11],[1, 3, 5, 7, 9]],11));"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "found at ( 2,4 )",
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "❓**Array row sum with so far** \r\n\r\nGiven an N X N array, you need to return a N X N+1 matrix. The coloum will be sum of the all the row elements.\r\n\r\n\r\n👀 Example\r\n\r\nInput matrix\r\n\r\n```\r\n1 2 3\r\n4 5 6\r\n```\r\n\r\nOutput Matrix\r\n\r\n```\r\n1 2 3 6 \r\n4 5 6 15\r\n```"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const row_sum=(array)=>{\r\n    for(let row=0;row<array.length;row++){\r\n        let sum=0;\r\n        for(let column=0;column<array[row].length;column++){\r\n            // adding each element to the sum.\r\n            sum=sum+array[row][column];\r\n        }\r\n        array[row].push(sum);\r\n    }\r\n    return array;\r\n}\r\nconsole.log(row_sum([[1,2,3],[4,5,6]]));"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "❓ **Find the row with maximum number of 1s**\n\nGiven a boolean 2D array, where each row is sorted. Find the row with the maximum number of 1s.\n\n👀 Example\n\nInput matrix\n\n```\n0 1 1 1\n0 0 1 1\n1 1 1 1  // this row has maximum 1s\n0 0 0 0\n```\n\nOutput\n\n```\n2\n```"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const maximum=(array)=>{\r\n    let result=[];\r\n    let max=0;\r\n    let final_row=0;\r\n    for(let row=0;row<array.length;row++){\r\n        let count=0;\r\n        for(let column=0;column<array[row].length;column++){\r\n            if(array[row][column]==1){\r\n                // increamenting count value when 1 value appears\r\n                count++;\r\n            }\r\n            // to reduce traversals\r\n            if(array[row].length-(column+1)<max && array[row].length-(count+1)>max){\r\n                break;\r\n            }\r\n        }\r\n        if(count>max){\r\n            max=count;\r\n            final_row=row;\r\n            result=[];\r\n            result.push(final_row);\r\n        }\r\n        // special case for same number of 1's containing arrays\r\n        else if(count==max){\r\n            final_row=row;\r\n            result.push(final_row);\r\n        }\r\n    }\r\n    console.log(result);\r\n}\r\nmaximum([[0,0,0,0],[0,0,0,0],[1,1,0,1],[0,0,0,0]])\r\n// maximum([[1,1,1,0],[0,,0,0,1],[1,0,0,1],[1,1,1,1]])"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "[ 2 ]",
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "❓ **Array diagonal printing**\n\nGiven a 2D matrix, print all elements of the given matrix in diagonal order. \n\nFor example, consider the following 5 X 4 input matrix.\n\n```\n    1     2     3     4\n    5     6     7     8\n    9    10    11    12\n   13    14    15    16\n   17    18    19    20\n```\n\nDiagonal printing of the above matrix is ⬇️\n\n```\n   1\n   5     2\n   9     6     3\n   13    10     7     4\n   17    14    11     8\n   18    15    12\n   19    16\n   20\n```"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const diagonal=(array)=>{\r\n    // calculating total rows f result\r\n    let total_rows=(array.length+array[0].length)-1;\r\n    let result=[];\r\n    // traversing rows\r\n    for(let row=0;row<total_rows;row++){\r\n        if(row<array.length){\r\n            var index=0;\r\n        }\r\n        else{\r\n            index++;\r\n        }\r\n        // traversing columns\r\n        for(let column=index;column<=row && column<array[0].length;column++){\r\n            // traversing diagonal indexes\r\n            result.push(array[row-column][column]);\r\n        }\r\n        console.log(result);\r\n        result=[];\r\n    }\r\n    \r\n}\r\n// diagonal([[1,5,9,13,17],[2,6,10,14,18],[3,7,11,15,19],[4,8,12,16,20]]);\r\ndiagonal([[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16],[17,18,19,20]]);\r\n"
+            ],
+            "outputs": []
+        }
+    ]
+}

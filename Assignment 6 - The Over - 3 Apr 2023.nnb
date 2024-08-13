@@ -1,0 +1,80 @@
+{
+    "cells": [
+        {
+            "language": "markdown",
+            "source": [
+                "### ❓ [#1] Ball Tracking\r\n\r\nYou need to track each ball of an over and do the below operations\r\n\r\n1. Record ball.\r\n2. Undo recent ball.\r\n3. Get run rate per valid ball in an over `(runs/validBallsBowled)`.\r\n4. Get run rate per ball in an over `(runs/ballsBowled)`.\r\n5. Get runs of the over.\r\n\r\n\r\n#### Constraints\r\n\r\n1. An over has `6` valid balls.\r\n2. `No ball`, `Wide ball` are not counted as valid balls.\r\n3. For `NoBall` take input is `N`, for `Wide ball` it is `Wd`. Extra runs for `Wd` and `N` is `1`.\r\n4. For all kind of `wickets` it is `W`.\r\n5. Also, valid score for a ball is 0, 1, 2, 3, 4, 6.\r\n6. If an over is completed. User has only two options Undo the last ball and Exit\r\n\r\n\r\n#### Input\r\n\r\n> Ask input from user for every ball until the over is completed. If over is completed, User has only two options Undo the last ball and Exit\r\n\r\n\r\n`0 to 6` => Valid ball with run\r\n\r\n`Wd/N` <*runs*> (Wd 6) => `Wide ball/No ball` and extra runs `Wd + 6 = 7` as Wide has an extra run.\r\n\r\n`W` => `Wicket`\r\n\r\n`UN` => Undo recent ball in over.\r\n\r\n`RRVB` => Get runrate for Valid balls.\r\n\r\n`RR` => Get runrate of an over.\r\n\r\n`R`  => Get runs in an over.\r\n\r\n`E`  => Exit on over is completed. (Should work only after an over(6 valid balls) is completed, Otherwise Ignore this input).\r\n\r\n`D`  => Display completed balls\r\n            Example\r\n                - 0 1 W 2Wd N 1N 2\r\n\r\n                    Here 1st ball score is 0\r\n                    2nd ball score is 1\r\n                    3rd ball is a Wicket\r\n                    4th ball is Wide ball with 2runs (Invalid ball)\r\n                    5th ball is a Noball with 0 runs (Invalid ball)\r\n                    6th ball is a Noball with 1 run (Invalid ball)\r\n                    7th ball score is 2\r\n\r\n\r\n> #### ℹ️ You can add new class/funtions/Enums, If necessary."
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "--------------------PSEUDO CODE--------------------------\r\nCREATE a class \"Over\" :\r\n    CREATE CONSTRUCTOR\r\n        initialize,\r\n        this.runs = 0 ;\r\n        this.validBalls = 0 ;\r\n        this.totalBalls = 0 ;\r\n        this.currentRun = 0 ;\r\n        this.array=[];\r\n    END CONSTRUCTOR ;\r\n\r\n\r\n    CREATE FUNCTION getRunRateForValidBalls():\r\n        print this.runs / this.validBalls;\r\n    END getRunRateForValidBalls;\r\n\r\n    CREATE FUNCTION getOverallRunRate():\r\n        print this.runs / this.totalBalls;\r\n    END getOverallRunRate;\r\n\r\n    CREATE FUNCTION getRuns():\r\n       print this.runs;\r\n    END getRuns;\r\n\r\n    CREATE FUNCTION displayOver():\r\n       print this.array;\r\n    END displayOver;\r\n\r\n    CREATE FUNCTION \" handleInput \" with parameter input :\r\n        IF ( this.validBalls <= 6 ) : // check IF number of valid Balls inside an Over.\r\n            IF ( input.length == 2 ) :\r\n                 split the input // input[0] = type of ball and input[1] number of runs made\r\n                 convert input[1] into Number type\r\n                 IF( input[1] ==5 or >6 or ( input[0] != \"N\" or input[0] != \"Wd\" ) ):\r\n                      print invalid runs or ball type ;\r\n                 END IF ;\r\n                 ELSE :\r\n                      this.runs = this.runs + input[1] + 1;\r\n                      this.currentRun = input[1] ;\r\n                      this.array.push( input[1] + input[0] ) ;\r\n                 END ELSE ;\r\n            END IF;\r\n\r\n            \r\n            ELSE IF ( input.length > 2 ): // input length is more\r\n                print invalid ;\r\n            END ELSE IF;\r\n\r\n\r\n            ELSE : // input length is 1\r\n                switch ( input ) :\r\n                    case \" W \" :\r\n                        this.validBalls ++;\r\n                        this.array.push ( \"W\" );\r\n                        this.currentRun = 0;\r\n                        print wicket;\r\n                    END case ;\r\n                    case \"N\" :\r\n                        this.runs = this.runs + 1;\r\n                        this.array.push ( \"N\" );\r\n                        this.currentRun = 1;\r\n                        print no ball\r\n                    END case ;\r\n                    case \"Wd\" :\r\n                        this.runs  = this.runs + 1;\r\n                        this.array.push ( \"Wd\" );\r\n                        this.currentRun = 1;\r\n                        print wide ball;\r\n                    END case ;\r\n                    case input type == Number and input != 5 and input <= 6: // exception for 5 runs and greater than 6\r\n                        this.validBalls ++;\r\n                        this.runs = this.runs + input;\r\n                        this.array.push ( input );\r\n                        this.currentRun = input;\r\n                        print input ;\r\n                    END case ;\r\n                END switch ;\r\n            END ELSE ;\r\n            this.totalBalls ++;\r\n        END IF ;\r\n\r\n\r\n\r\n\r\n        ELSE IF ( input == \"RRVB\" ) :\r\n            print inherit FUNCTION getRunRateForValidBalls()\r\n        END ELSE IF;\r\n\r\n        ELSE IF ( input == \"RR\" ) :\r\n            print inherit FUNCTION getOverallRunRate()\r\n        END ELSE IF;\r\n\r\n        ELSE IF ( input == \"R\" ) :\r\n            print inherit FUNCTION getRuns()\r\n        END ELSE IF;\r\n\r\n        ELSE IF ( input == \"D\" ) :\r\n            print inherit FUNCTION displayOver()\r\n        END ELSE IF;\r\n\r\n        ELSE IF ( input == \"UN\" ) :\r\n            this.runs = this.runs - this.currentRun ;\r\n            this.validBalls --;\r\n            this.totalBalls --;\r\n            print \"continue gaming\" \r\n        END ELSE IF;\r\n\r\n        ELSE IF ( input == \"E\" ) :\r\n            print \"GAME OVER\" \r\n        END ELSE IF;\r\n    END FUNCTION \" handleInput \"\r\n\r\n\r\n\r\n\r\n\r\n    // DOCUMENTATION\r\n\r\n\r\n\r\n    create a class Over with its constructor initialzed with variables validballs,totalballs,currentrun and an array\r\n    create function getRunRateForValidBalls to return run rate for valid Balls\r\n    create fuction getOverallRunRate to return run rate for all the Balls\r\n    create fuction getRuns to return total number of runs\r\n    craete fucntion displayOver to return what are the balls bowled in an over including valid and invalid\r\n    create function handleInput to take the inputs and calculate the repsctive functions\r\n    => increament the total number of balls bowled once it gets inside the handleInput function\r\n    => convert the input into an array\r\n    => if the number of valid balls is less than 6  and array length is 2 then, \r\n       ==> split the array into two halfs ( one is for number and another is for type of ball )\r\n       ==> if the number is equal to five or > 6 then return invalid\r\n       ==> increament the total runs made with the runs + 1\r\n       ==> push both the values into an array as a string\r\n    => if the array length is not equal to 2, check for the input\r\n    => if \"Wd\" or \"N increament the total runs made with the runs + 1\r\n    => if \"W\" increament the valid balls ;\r\n    => if \"0\" TO \"6\" convert the input into number and increament the valid balls and add number of runs made to the total runs\r\n    => else  print invalid\r\n    => if \"RRVB\" call the fucntion getRunRateForValidBalls;\r\n    => if \"RR\" call the function getOverallRunRate;\r\n    => if \"R\" call the fcuntion getRuns;\r\n    => if \"D\" call the fucntion displayOver;\r\n    => if \"UN\" decreament the number of valid balls and totalBalls also deduct the score last made runs\r\n    => if \"E\" end the GAME\r\n    => make an else statment when it fails the valid balls count (<6) showing only undo and  exit options"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "const Enums = {\r\n    noBall: \"N\",\r\n    wideBall: \"Wd\",\r\n    wicket: \"W\",\r\n    undo: \"UN\",\r\n    runRate: \"RR\",\r\n    runrateForValidballs: \"RRVB\",\r\n    runs: \"R\",\r\n    exit: \"E\",\r\n    display: \"D\",\r\n}\r\nclass Over {\r\n    constructor() {\r\n        this.balls = [];\r\n    }\r\n    getRuns = () => {\r\n        let runsMade = 0;\r\n        for (let i = 0; i < this.balls.length; i++) {\r\n            if (typeof this.balls[i] == \"number\") {\r\n                runsMade = runsMade + this.balls[i];\r\n            }\r\n            else if (this.balls[i] == Enums.noBall || this.balls[i] == Enums.wideBall) {\r\n                runsMade = runsMade + 1;\r\n            }\r\n            else if (this.balls[i].includes(Enums.noBall) || this.balls[i].includes(Enums.wideBall)) {\r\n                runsMade = runsMade + this.checkNumber(this.balls[i]);\r\n            }\r\n        }\r\n        return runsMade;\r\n    }\r\n    undo = () => {\r\n        this.balls.pop();\r\n        return this.balls;\r\n    }\r\n    runRate = () => {\r\n        return (this.getRuns() / this.balls.length).toFixed(2);\r\n    }\r\n    runrateForValidballs = () => {\r\n        let validBalls = 0;\r\n        for (var i=0;i<this.balls.length ;i++) {\r\n            if (typeof this.balls[i] == \"number\" || this.balls[i] == Enums.wicket) {\r\n                validBalls++;\r\n            }\r\n        }\r\n        return (this.getRuns() / validBalls).toFixed(2);\r\n    }\r\n    displayOver = () => {\r\n        return this.balls;\r\n    }\r\n    exit = () => {\r\n        if(this.balls.length <= 6) {\r\n            return \"GAME OVER\";\r\n        }\r\n        this.balls.length=7;\r\n    }\r\n    checkNumber = (Run) => {\r\n        if (Run[0] == \"1\" || Run[0] == \"2\" || Run[0] == \"3\" || Run[0] == \"4\" || Run[0] == \"6\") {\r\n            return Number(Run[0]);\r\n        }\r\n        return false;\r\n    }\r\n    handleInput = (input) => {\r\n        if(this.balls.length <= 6) {\r\n            if ((typeof (input) == \"number\") && (input != 5) && (input >= 0) && (input <= 6)) {\r\n                this.balls.push(input);\r\n            }\r\n            else if (input == Enums.wicket) {\r\n                this.balls.push(input);\r\n            }\r\n            else if ((input == Enums.noBall) || (input.includes(Enums.noBall) && input.length == 2 && this.checkNumber(input) != false)) {\r\n                this.balls.push(input);\r\n            }\r\n            else if ((input == Enums.wideBall) || (input.includes(Enums.wideBall) && input.length == 3 && this.checkNumber(input) != false)) {\r\n                this.balls.push(input);\r\n            }\r\n        }\r\n        else {\r\n            return \"GAME OVER\";\r\n        }\r\n        switch (input) {\r\n            case Enums.display:\r\n                return this.displayOver();\r\n            case Enums.runs:\r\n                return this.getRuns();\r\n            case Enums.undo:\r\n                return this.undo();\r\n            case Enums.runRate:\r\n                return this.runRate();\r\n            case Enums.runrateForValidballs:\r\n                return this.runrateForValidballs();\r\n            case Enums.exit:\r\n                return this.exit();\r\n        }\r\n    }\r\n}\r\nvar assert = require('assert');\r\n// Please take input from user on above condition\r\nlet over  = new Over();\r\n\r\nover.handleInput(\"2\")\r\nover.handleInput(\"W\")\r\nover.handleInput(\"N\")\r\nassert.deepEqual(over.displayOver() , [\"2\", \"W\", \"N\"])\r\nassert.deepEqual(over.getRuns() , 3)\r\nassert.deepEqual(over.getRunRateForValidBalls() , 1.5)\r\nassert.deepEqual(over.getOverallRunRate() , 1)\r\n\r\nover.handleInput(\"UN\")\r\n\r\nassert.deepEqual(over.displayOver() , [\"2\", \"W\"])\r\nassert.deepEqual(over.getRuns() , 2)\r\nassert.deepEqual(over.getRunRateForValidBalls() , 1)\r\nassert.deepEqual(over.getOverallRunRate() , 1)"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.error",
+                            "value": {
+                                "name": "AssertionError",
+                                "message": "Expected values to be loosely deep-equal:\n\n[\n  'W',\n  'N'\n]\n\nshould loosely deep-equal\n\n[\n  '2',\n  'W',\n  'N'\n]",
+                                "stack": "AssertionError [ERR_ASSERTION]: Expected values to be loosely deep-equal:\n\n[\n  'W',\n  'N'\n]\n\nshould loosely deep-equal\n\n[\n  '2',\n  'W',\n  'N'\n]\n    at <Cell 3> [103, 0]\n    at <Cell 3> [112, 46]\n    at Script.runInContext (node:vm:141:12)\n    at Script.runInNewContext (node:vm:146:17)\n    at Object.runInNewContext (node:vm:306:38)\n    at C (c:\\Users\\HP\\.vscode\\extensions\\donjayamanne.typescript-notebook-2.0.6\\out\\extension\\server\\index.js:2:113345)\n    at t.execCode (c:\\Users\\HP\\.vscode\\extensions\\donjayamanne.typescript-notebook-2.0.6\\out\\extension\\server\\index.js:2:114312)\n    at k.<anonymous> (c:\\Users\\HP\\.vscode\\extensions\\donjayamanne.typescript-notebook-2.0.6\\out\\extension\\server\\index.js:2:142156)\n    at k.emit (node:events:513:28)\n    at k.emit (node:domain:489:12)"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
+                "\r\n\r\n"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "",
+                                ""
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.error",
+                            "value": {
+                                "name": "ReferenceError",
+                                "message": "Over is not defined",
+                                "stack": "    at <Cell 4> [3, 0]\n    at <Cell 4> [17, 46]\n    at Script.runInContext (node:vm:141:12)\n    at Script.runInNewContext (node:vm:146:17)\n    at Object.runInNewContext (node:vm:306:38)\n    at C (c:\\Users\\HP\\.vscode\\extensions\\donjayamanne.typescript-notebook-2.0.6\\out\\extension\\server\\index.js:2:113345)\n    at t.execCode (c:\\Users\\HP\\.vscode\\extensions\\donjayamanne.typescript-notebook-2.0.6\\out\\extension\\server\\index.js:2:114312)\n    at k.<anonymous> (c:\\Users\\HP\\.vscode\\extensions\\donjayamanne.typescript-notebook-2.0.6\\out\\extension\\server\\index.js:2:142156)\n    at k.emit (node:events:513:28)\n    at k.emit (node:domain:489:12)"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
